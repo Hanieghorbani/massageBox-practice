@@ -7,13 +7,32 @@ let inputName = document.querySelector(".inputName")
 let childArray = new Set()
 let blackList = ["کثافت", "عوضی", "بیشعور", "احمق"]
 
-massage.addEventListener("input", () => {
+massage.addEventListener("keyup", (e) => {
   let smsCount = parseInt(massage.value.length / 70 + 1)
   numOfSms.innerText = `(${smsCount} پیامک)`
   remainingChr.innerText = 70 * smsCount - massage.value.length
+
+  if (e.keyCode == 13 && massage.value.trim()) {
+    inputName.focus()
+  }
 })
 
-btnSend.addEventListener("click", () => {
+
+inputName.addEventListener('keyup',e=>{
+  if (e.keyCode == 13 && inputName.value.trim()) {
+    sendSMS()
+    inputName.blur()
+  }
+})
+btnSend.addEventListener('click',sendSMS)
+
+massagesBox.addEventListener("click", (e) => {
+  if (e.target.tagName == "H2") {
+    e.target.classList.toggle("active")
+  }
+})
+
+function sendSMS() {
   if (massage.value.trim() && inputName.value.trim()) {
     let words = massage.value.split(" ")
     for (const blackWord of blackList) {
@@ -48,16 +67,11 @@ btnSend.addEventListener("click", () => {
     }
  inputName.value = ""
   massage.value = ""
+  massage.focus()
   } else {
     alert("لطفا متن پیامک یا نام گیرنده را وارد کنید")
   }
-})
-
-massagesBox.addEventListener("click", (e) => {
-  if (e.target.tagName == "H2") {
-    e.target.classList.toggle("active")
-  }
-})
+}
 
 function generateHist(name, sms) {
   let tempOfAccordion = `<div class="accordionItem">
