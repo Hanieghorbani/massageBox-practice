@@ -1,14 +1,14 @@
 body {
     font-family: vazir;
-    background-color:var(--background-body) ;
+    background-color: var(--background-body);
 }
 
-:root{
-    --background-body:#f4eddd;
-    --color:#967E76;
-    --background:#D7C0AE;
-    --border-color:#967E76;
-    --color2:#c7d1d9;
+:root {
+    --background-body: #f4eddd;
+    --color: #967e76;
+    --background: #d7c0ae;
+    --border-color: #967e76;
+    --color2: #c7d1d9;
 }
 
 .container {
@@ -24,7 +24,7 @@ body {
     width: 350px;
     font-family: vazir;
     background-color: var(--background);
-    color:var(--color) ;
+    color: var(--color);
     font-size: 1.2rem;
     border: 3px solid var(--color);
     padding: 15px;
@@ -37,7 +37,7 @@ body {
 #btnSend {
     font-family: vazir;
     background-color: var(--color);
-    color:var(--color2) ;
+    color: var(--color2);
     border: none;
     padding: 5px 30px;
     margin-top: 30px;
@@ -45,7 +45,7 @@ body {
     cursor: pointer;
 }
 
-.inputName{
+.inputName {
     direction: rtl;
     font-family: vazir;
     background-color: var(--color);
@@ -60,7 +60,7 @@ body {
     width: 100px;
 }
 
-.inputName::placeholder{
+.inputName::placeholder {
     color: var(--color2);
     direction: rtl;
 }
@@ -81,7 +81,30 @@ body {
     border-radius: 5px;
     padding: 0 10px;
     margin-bottom: 20px;
-    
+    position: relative;
+}
+
+
+.deleteAccor::before,
+.deleteAccor::after {
+    content: "";
+    display: inline-block;
+    width: 17px;
+    height: 3px;
+    position: absolute;
+    background-color:rgb(164, 85, 85);
+    right: 10px;
+    top: 15px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.deleteAccor::before {
+    transform: rotate(-45deg);
+}
+
+.deleteAccor::after {
+    transform: rotate(45deg);
 }
 
 .accordionItem:hover {
@@ -95,6 +118,7 @@ body {
     padding: 5px 15px;
     font-size: 25px;
     color: var(--color);
+    margin-top: 50px;
 }
 
 .recipientName::before,
