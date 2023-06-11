@@ -176,14 +176,18 @@ body {
     background-color: var(--background);
     margin-top: 30px;
     color: var(--color);
-    padding: 10px 35px 10px 15px;
+    padding: 20px 35px 30px 35px;
     border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-top-left-radius: 30px;
+    position: relative;
 }
-
-
 
 .histSMS > p {
     font-size: 14px;
+    position: absolute;
+    left: 20px;
+    bottom: 0;
 }
 @font-face {
     font-family: vazir;
