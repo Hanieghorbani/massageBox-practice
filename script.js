@@ -12,7 +12,7 @@ let hours
 let minutes
 
 getLocalStorage()
-massage.addEventListener("keyup", (e) => {
+massage.addEventListener("keydown", (e) => {
   let smsCount = parseInt(massage.value.length / 70 + 1)
   numOfSms.innerText = `(${smsCount} پیامک)`
   remainingChr.innerText = 70 * smsCount - massage.value.length
@@ -46,9 +46,11 @@ function sendSMS() {
 
   if (massage.value.trim() && inputName.value.trim()) {
     let words = massage.value.split(" ")
+    console.log(words);
     for (const blackWord of blackList) {
       if (words.includes(blackWord)) {
         alert("لطفا شخصیت خود را حفظ و از کلمات مناسب تر استفاده کنید.")
+        notifTxt()
         return
       }
     }
@@ -70,7 +72,6 @@ function sendSMS() {
         childArray.forEach((itemChild) => {
           if (itemChild == inputName.value.trim()) {
             for (const child of massagesBox.children) {
-              console.log(child.lastElementChild)
               if (
                 child.firstElementChild.nextElementSibling.innerText ==
                 itemChild
@@ -95,6 +96,8 @@ function sendSMS() {
     removeAccor()
   } else {
     alert("لطفا متن پیامک یا نام گیرنده را وارد کنید")
+    massage.focus()
+
   }
 }
 
@@ -144,7 +147,6 @@ function getLocalStorage() {
     notifTxt()
   } else {
     for (const item of getHistory) {
-      console.log(111)
       let newAccor = document.createElement("div")
       newAccor.setAttribute("class", "accordionItem")
       newAccor.insertAdjacentHTML("beforeend", item)
