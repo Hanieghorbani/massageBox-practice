@@ -7,6 +7,10 @@ let inputName = document.querySelector(".inputName")
 let childArray = new Set()
 let blackList = ["کثافت", "عوضی", "بیشعور", "احمق"]
 
+let date
+let hours
+let minutes
+
 getLocalStorage()
 massage.addEventListener("keyup", (e) => {
   let smsCount = parseInt(massage.value.length / 70 + 1)
@@ -33,6 +37,13 @@ massagesBox.addEventListener("click", (e) => {
 })
 
 function sendSMS() {
+  if (massagesBox.firstElementChild.tagName == "P") {
+    massagesBox.innerHTML = ""
+  }
+  date = new Date()
+  hours = date.getHours()
+  minutes = date.getMinutes()
+
   if (massage.value.trim() && inputName.value.trim()) {
     let words = massage.value.split(" ")
     for (const blackWord of blackList) {
@@ -44,26 +55,33 @@ function sendSMS() {
     alert("پیامک شما ارسال شد .")
 
     if (!massagesBox.innerHTML) {
-      generateHist(inputName.value.trim(), massage.value)
+      generateHist(inputName.value.trim(), massage.value, `${hours}:${minutes}`)
     } else {
-
       for (const child of massagesBox.children) {
         childArray.add(child.children[1].innerText)
       }
       if (!childArray.has(inputName.value.trim())) {
-        console.log('ham nam vogod ndrd');
-        generateHist(inputName.value.trim(), massage.value)
+        generateHist(
+          inputName.value.trim(),
+          massage.value,
+          `${hours}:${minutes}`
+        )
       } else {
-                console.log(111);
         childArray.forEach((itemChild) => {
           if (itemChild == inputName.value.trim()) {
             for (const child of massagesBox.children) {
-              console.log(child.lastElementChild);
-              if (child.firstElementChild.nextElementSibling.innerText == itemChild) {
+              console.log(child.lastElementChild)
+              if (
+                child.firstElementChild.nextElementSibling.innerText ==
+                itemChild
+              ) {
                 let newLi = document.createElement("li")
+                let newP = document.createElement("p")
+                newP.innerText = `${hours}:${minutes}`
                 newLi.setAttribute("class", "histSMS")
                 newLi.innerText = massage.value
                 child.lastElementChild.append(newLi)
+                newLi.append(newP)
               }
             }
           }
@@ -80,12 +98,12 @@ function sendSMS() {
   }
 }
 
-function generateHist(name, sms) {
+function generateHist(name, sms, time) {
   let tempOfAccordion = `<div class="accordionItem">
                           <span class="deleteAccor"></span>
                            <h2 class="recipientName">${name}</h2>
                            <div class="historyOfMassages">
-                             <li class="histSMS">${sms}</li>
+                             <li class="histSMS">${sms}<p>${time}</p></li>
                            </div>
                          </div>`
   massagesBox.insertAdjacentHTML("beforeend", tempOfAccordion)
@@ -108,8 +126,10 @@ function removeAccor() {
     child.addEventListener("click", (e) => {
       if (e.target.tagName == "SPAN") {
         e.target.parentElement.remove()
-
         setLocalStorage(massagesBox)
+        if (!massagesBox.innerHTML) {
+          notifTxt()
+        }
       }
     })
   }
@@ -117,11 +137,26 @@ function removeAccor() {
 
 function getLocalStorage() {
   let getHistory = JSON.parse(localStorage.getItem("history"))
-  for (const item of getHistory) {
-    let newAccor = document.createElement("div")
-    newAccor.setAttribute("class", "accordionItem")
-    newAccor.insertAdjacentHTML("beforeend", item)
-    massagesBox.append(newAccor)
+  if (!getHistory) {
+    getHistory = []
+  } 
+  if (getHistory.length == 0) {
+    notifTxt()
+  } else {
+    for (const item of getHistory) {
+      console.log(111)
+      let newAccor = document.createElement("div")
+      newAccor.setAttribute("class", "accordionItem")
+      newAccor.insertAdjacentHTML("beforeend", item)
+      massagesBox.append(newAccor)
+      removeAccor()
+    }
   }
-  removeAccor()
+}
+
+function notifTxt() {
+  let newP = document.createElement("p")
+  newP.setAttribute("class", "notifText")
+  newP.innerText = `هنوز هیچ پیامی ارسال نشده است`
+  massagesBox.append(newP)
 }

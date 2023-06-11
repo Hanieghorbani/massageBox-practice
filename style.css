@@ -69,6 +69,19 @@ body {
     transform: translate(2px, 2px);
 }
 
+.title{
+    text-align: center;
+    color: var(--color);
+    margin-bottom: 60px;
+    font-size: 25px;
+}
+
+.notifText{
+    color: var(--color);
+    text-align: right;
+    
+}
+
 .massagesBox {
     width: 70%;
     margin: auto;
@@ -84,7 +97,6 @@ body {
     position: relative;
 }
 
-
 .deleteAccor::before,
 .deleteAccor::after {
     content: "";
@@ -92,7 +104,7 @@ body {
     width: 17px;
     height: 3px;
     position: absolute;
-    background-color:rgb(164, 85, 85);
+    background-color: rgb(164, 85, 85);
     right: 10px;
     top: 15px;
     border-radius: 2px;
@@ -144,7 +156,6 @@ body {
     height: 0;
     overflow: auto;
     display: none;
-    color: var(--color);
 }
 
 .recipientName.active + .historyOfMassages {
@@ -157,6 +168,23 @@ body {
     transform: rotate(0deg);
 }
 
+.histSMS {
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--background);
+    margin-top: 30px;
+    color: var(--color);
+    padding: 10px 35px 10px 15px;
+    border-top-right-radius: 30px;
+}
+
+
+
+.histSMS > p {
+    font-size: 14px;
+}
 @font-face {
     font-family: vazir;
     src: url(Vazir.woff);
